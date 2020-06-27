@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col-6 col-md-4">
+    <br>
+    <div class="container">
+      <form>
+        <!-- Course link-->
+        <div class="form-group">
+          <label class="sr-only" for="courseLink">Course link</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Course link</div>
+            </div>
+            <input type="text" class="form-control" name="courseLink"
+                   id="courseLink" placeholder="Course link...">
+          </div>
+        </div>
+        <br>
+        <!-- Course summary location-->
+        <div class="form-group">
+          <label class="sr-only" for="courseSummaryLocation">Course summary location</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Course summary location</div>
+            </div>
+            <input type="text" class="form-control" id="courseSummaryLocation" name="courseSummaryLocation"
+                   placeholder="Course summary location...">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-outline-success">Create</button>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="col-md-8">
+    <br>
+    <div class="container">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Chapter 1</th>
+          <th scope="col">Chapter title</th>
+          <th scope="col">Chapter link</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Encapsulation</td>
+          <td>https://www.youtube.com</td>
+          <td>
+            <button type="button" id="btnChapterModal" class="btn btn-outline-info ml-sm-1" data-toggle="modal"
+                    data-target="#chapterModal" data-whatever="@fat">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+            </button>
+            <button class="btn btn-outline-danger ml-2 ">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path fill-rule="evenodd"
+                      d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
+                <path fill-rule="evenodd"
+                      d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!--ModalEdit-->
+<div class="modal fade" id="chapterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Chapter : </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Course link-->
+        <div class="form-group">
+          <label class="sr-only" for="courseEditLink">Course link</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Course link</div>
+            </div>
+            <input type="text" class="form-control" name="courseEditLink"
+                   id="courseEditLink" placeholder="Course link...">
+          </div>
+        </div>
+        <br>
+        <!-- Course summary location-->
+        <div class="form-group">
+          <label class="sr-only" for="courseSummaryEditLocation">Course summary location</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Course summary location</div>
+            </div>
+            <input type="text" class="form-control" id="courseSummaryEditLocation" name="courseSummaryEditLocation"
+                   placeholder="Course summary location...">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="edit" class="btn btn-outline-info">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
