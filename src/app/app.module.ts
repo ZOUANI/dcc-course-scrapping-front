@@ -6,6 +6,7 @@ import {CourseScrapingComponent} from './course-scraping/course-scraping.compone
 import {CourseScrapingCreateComponent} from './course-scraping/course-scraping-create/course-scraping-create.component';
 import {CourseScrapingListComponent} from './course-scraping/course-scraping-list/course-scraping-list.component';
 import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {FormsModule} from '@angular/forms';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
