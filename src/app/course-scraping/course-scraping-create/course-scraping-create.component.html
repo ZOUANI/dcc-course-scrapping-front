@@ -28,14 +28,14 @@
           </div>
         </div>
         <div class="row">
-          <!--
+
           <div class="col">
-            <button type="submit"
-                    (click)="getPageContent(courseToAdd)"
-                    class="btn btn-outline-dark">Get HTML
+            <button type="button" id="btnCourseModal" class="btn btn-outline-info ml-sm-1" data-toggle="modal"
+                    data-target="#courseContentModal" data-whatever="@fat" (click)="getPageContent(courseToAdd)">
+              Get HTML
             </button>
           </div>
-          -->
+
           <div class="col">
             <button type="submit" [disabled]="courseToAdd.chapters.length!=0"
                     (click)="addCourse(courseSummaryLocation,courseToAdd)"
@@ -43,7 +43,7 @@
             </button>
           </div>
           <div class="col">
-            <button type="submit" [disabled]="courseToAdd.chapters.length==0"
+            <button type="submit"
                     (click)="reset()"
                     class="btn btn-outline-dark">Reset
             </button>
@@ -160,3 +160,27 @@
     </div>
   </div>
 </div>
+
+
+<!--ModalPage content-->
+<div class="modal fade" id="courseContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Course page content : </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div [innerHTML]="pageHtmlContent"></div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
