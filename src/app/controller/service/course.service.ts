@@ -15,11 +15,12 @@ export class CourseService {
 
   //================Variables======================
   public course_create = new Course();
+  public course_check = new Course();
+  public page_content = '';
 
-  //public chaptercourses = Array<Course>();
-
-  public addCourse(searchLocation: string) {
-    this.http.post<Course>(this.courseUrl + '/searchLocation/' + searchLocation, this.course_create).subscribe(
+  public addCourse(searchLocation: string, courseDto: Course) {
+    console.log(this.course_create);
+    this.http.post<Course>(this.courseUrl + '/searchLocation/' + searchLocation, courseDto).subscribe(
       data => {
         this.course_create = data;
       }, error1 => {
@@ -32,7 +33,28 @@ export class CourseService {
     this.http.post<Course>(this.courseUrl + '/', this.course_create).subscribe(
       data => {
         console.log(data);
-        this.course_create = new Course();
+      }, error1 => {
+        console.log(error1);
+      }
+    );
+  }
+
+  public getPageContent(courseDto: Course) {
+    this.http.post<string>(this.courseUrl + '/getPageContent', courseDto).subscribe(
+      data => {
+        console.log(data);
+        this.page_content = data;
+      }, error1 => {
+        console.log(error1);
+      }
+    );
+  }
+
+  public getCourseByLink(courseDto: Course) {
+    this.http.post<Course>(this.courseUrl + '/findByCourseLink', courseDto).subscribe(
+      data => {
+        console.log(data);
+        this.course_check = data;
       }, error1 => {
         console.log(error1);
       }

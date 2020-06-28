@@ -30,7 +30,13 @@
         <div class="row">
           <div class="col">
             <button type="submit"
-                    (click)="addCourse(courseSummaryLocation)"
+                    (click)="getPageContent(courseToAdd)"
+                    class="btn btn-outline-dark">Get HTML
+            </button>
+          </div>
+          <div class="col">
+            <button [disabled]="courseToAdd.chapters.length!=0 || pageHtmlContent==''" type="submit"
+                    (click)="addCourse(courseSummaryLocation,courseToAdd)"
                     class="btn btn-outline-info">Export
             </button>
           </div>
@@ -49,6 +55,9 @@
         </div>
 
       </form>
+      <div *ngIf="pageHtmlContent!=''" class="row">
+        <p class="text-justify">{{pageHtmlContent}}</p>
+      </div>
     </div>
   </div>
 
