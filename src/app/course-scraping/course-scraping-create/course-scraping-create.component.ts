@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../../controller/service/course.service';
 import {Course} from '../../controller/model/course.model';
 import Swal from 'sweetalert2';
+import {Chapter} from '../../controller/model/chapter.model';
 
 
 @Component({
@@ -19,9 +20,14 @@ export class CourseScrapingCreateComponent implements OnInit {
 
   public courseSummaryLocation: string;
   public courseHtml;
+  public chapter = new Chapter();
 
   get courseToAdd() {
     return this.courseService.course_create;
+  }
+
+  getChapter(item: Chapter) {
+    this.chapter = item;
   }
 
   get courseCheck() {
@@ -32,6 +38,26 @@ export class CourseScrapingCreateComponent implements OnInit {
     return this.courseService.getCourseByLink(courseDto);
   }
 
+  get course_chapters() {
+    return this.courseService.course_chapters;
+  }
+
+  public deleteItem(item: Chapter) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#07d600',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.course_chapters.splice(this.course_chapters.indexOf(item), 1);
+      }
+    });
+  }
+
   checkIfCourseExist(searchLocation: string, courseDto: Course) {
     console.log(this.courseCheck);
     if (this.courseCheck == null) {
@@ -39,7 +65,7 @@ export class CourseScrapingCreateComponent implements OnInit {
       Swal.fire({
         title: 'Loading chapters',
         html: 'Please wait !<b></b> ',
-        timer: 40000,
+        timer: 60000,
         timerProgressBar: true,
         onBeforeOpen: () => {
           Swal.showLoading();
@@ -80,10 +106,19 @@ export class CourseScrapingCreateComponent implements OnInit {
     return this.courseService.saveCourse();
   }
 
+  saveCourseWithChapters() {
+    this.courseToAdd.chapters = this.course_chapters;
+    this.saveCourse();
+    this.courseService.course_chapters = Array<Chapter>();
+    this.courseService.course_create = new Course();
+    this.courseSummaryLocation = '';
+  }
+
   getPageContent(courseDto: Course) {
     this.courseService.getPageContent(courseDto);
     this.courseHtml = new DOMParser().parseFromString(this.courseService.page_content, 'text/html');
-    console.log(new XMLSerializer().serializeToString(this.courseHtml));
+    console.log(this.courseHtml.text);
+
   }
 
   get pageHtmlContent() {

@@ -28,14 +28,16 @@
           </div>
         </div>
         <div class="row">
+          <!--
           <div class="col">
             <button type="submit"
                     (click)="getPageContent(courseToAdd)"
                     class="btn btn-outline-dark">Get HTML
             </button>
           </div>
+          -->
           <div class="col">
-            <button [disabled]="(courseToAdd.chapters.length!=0 || pageHtmlContent=='')" type="submit"
+            <button type="submit" [disabled]="courseToAdd.chapters.length!=0"
                     (click)="addCourse(courseSummaryLocation,courseToAdd)"
                     class="btn btn-outline-info">Export
             </button>
@@ -48,16 +50,18 @@
           </div>
           <div class="col">
             <button type="submit" [disabled]="courseToAdd.chapters.length==0"
-                    (click)="saveCourse()"
+                    (click)="saveCourseWithChapters()"
                     class="btn btn-outline-success">Save course with chapters
             </button>
           </div>
         </div>
 
       </form>
+      <!--
       <div *ngIf="pageHtmlContent!=''" class="row">
-        <p class="text-justify">{{courseHtml}}</p>
+        {{courseHtml}}
       </div>
+      -->
     </div>
   </div>
 
@@ -79,13 +83,13 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of courseToAdd.chapters">
-        <th scope="row">Chapter {{courseToAdd.chapters.indexOf(item) + 1}}</th>
+      <tr *ngFor="let item of course_chapters">
+        <th scope="row">Chapter {{course_chapters.indexOf(item) + 1}}</th>
         <td>{{item.title}}</td>
         <td><a href="{{item.chapterLink}}">{{item.chapterLink}}</a></td>
         <td>
           <button type="button" id="btnChapterModal" class="btn btn-outline-info ml-sm-1" data-toggle="modal"
-                  data-target="#chapterModal" data-whatever="@fat">
+                  data-target="#chapterModal" data-whatever="@fat" (click)="getChapter(item)">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
               <path
@@ -94,7 +98,7 @@
                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
             </svg>
           </button>
-          <button class="btn btn-outline-danger ml-2 ">
+          <button class="btn btn-outline-danger ml-2 " (click)="deleteItem(item)">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -116,7 +120,7 @@
 <!--ModalEdit-->
 <div class="modal fade" id="chapterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Chapter : </h5>
@@ -127,31 +131,31 @@
       <div class="modal-body">
         <!-- Course link-->
         <div class="form-group">
-          <label class="sr-only" for="courseEditLink">Course link</label>
+          <label class="sr-only" for="chapterTitle">Chapter title</label>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
-              <div class="input-group-text">Course link</div>
+              <div class="input-group-text">Chapter title</div>
             </div>
-            <input type="text" class="form-control" name="courseEditLink"
-                   id="courseEditLink" placeholder="Course link...">
+            <input type="text" class="form-control" name="chapterTitle"
+                   id="chapterTitle" placeholder="Chapter title..." [(ngModel)]="chapter.title">
           </div>
         </div>
         <br>
         <!-- Course summary location-->
         <div class="form-group">
-          <label class="sr-only" for="courseSummaryEditLocation">Course summary location</label>
+          <label class="sr-only" for="chapterLink">Chapter link</label>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
-              <div class="input-group-text">Course summary location</div>
+              <div class="input-group-text">Chapter link</div>
             </div>
-            <input type="text" class="form-control" id="courseSummaryEditLocation" name="courseSummaryEditLocation"
-                   placeholder="Course summary location...">
+            <input type="text" class="form-control" id="chapterLink" name="chapterLink"
+                   placeholder="Chapter link..." [(ngModel)]="chapter.chapterLink">
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="edit" class="btn btn-outline-info">Edit</button>
+        <!--<button type="button" id="edit" class="btn btn-outline-info">Edit</button>-->
       </div>
     </div>
   </div>
