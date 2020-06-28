@@ -15,4 +15,5 @@ export class Course {
 
   public id: number;
   public chapters = Array<Chapter>();
+  public htmlPageContent: string;
 }

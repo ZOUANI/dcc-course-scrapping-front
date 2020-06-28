@@ -18,7 +18,7 @@ export class CourseScrapingCreateComponent implements OnInit {
   }
 
   public courseSummaryLocation: string;
-  public courseDto = new Course();
+  public courseHtml;
 
   get courseToAdd() {
     return this.courseService.course_create;
@@ -82,6 +82,8 @@ export class CourseScrapingCreateComponent implements OnInit {
 
   getPageContent(courseDto: Course) {
     this.courseService.getPageContent(courseDto);
+    this.courseHtml = new DOMParser().parseFromString(this.courseService.page_content, 'text/html');
+    console.log(new XMLSerializer().serializeToString(this.courseHtml));
   }
 
   get pageHtmlContent() {

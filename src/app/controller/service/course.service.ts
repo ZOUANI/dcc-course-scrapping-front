@@ -40,10 +40,10 @@ export class CourseService {
   }
 
   public getPageContent(courseDto: Course) {
-    this.http.post<string>(this.courseUrl + '/getPageContent', courseDto).subscribe(
+    this.http.post<Course>(this.courseUrl + '/getPageContent', courseDto,).subscribe(
       data => {
         console.log(data);
-        this.page_content = data;
+        this.page_content = data.htmlPageContent;
       }, error1 => {
         console.log(error1);
       }
