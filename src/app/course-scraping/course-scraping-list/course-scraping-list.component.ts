@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CourseService} from '../../controller/service/course.service';
+import {Chapter} from '../../controller/model/chapter.model';
+import {Course} from '../../controller/model/course.model';
 
 @Component({
   selector: 'app-course-scraping-list',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseScrapingListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private courseService: CourseService) {
+  }
 
   ngOnInit(): void {
+    this.courseService.getAllCourses();
+  }
+
+  public chapters = Array<Chapter>();
+  public course = new Course();
+  public searchText = '';
+
+  getCourseChapters(course: Course) {
+    this.course = course;
+    this.chapters = course.chapters;
+  }
+
+  get allCourses() {
+    return this.courseService.allCourses;
   }
 
 }

@@ -20,6 +20,7 @@ export class CourseService {
   public course_check = new Course();
   public course_chapters = Array<Chapter>();
   public page_content = '';
+  public allCourses = Array<Course>();
 
 
   public addCourse(searchLocation: string, courseDto: Course) {
@@ -39,6 +40,7 @@ export class CourseService {
     this.http.post<Course>(this.courseUrl + '/', this.course_create).subscribe(
       data => {
         console.log(data);
+        this.getAllCourses();
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -76,6 +78,17 @@ export class CourseService {
       data => {
         console.log(data);
         this.course_check = data;
+      }, error1 => {
+        console.log(error1);
+      }
+    );
+  }
+
+  public getAllCourses() {
+    this.http.get<Array<Course>>(this.courseUrl + '/getAllCourses').subscribe(
+      data => {
+        console.log(data);
+        this.allCourses = data;
       }, error1 => {
         console.log(error1);
       }

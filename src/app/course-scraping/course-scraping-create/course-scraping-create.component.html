@@ -31,13 +31,15 @@
 
           <div class="col">
             <button type="button" id="btnCourseModal" class="btn btn-outline-info ml-sm-1" data-toggle="modal"
+                    [disabled]="courseToAdd.courseLink==null"
                     data-target="#courseContentModal" data-whatever="@fat" (click)="getPageContent(courseToAdd)">
               Get HTML
             </button>
           </div>
 
           <div class="col">
-            <button type="submit" [disabled]="courseToAdd.chapters.length!=0"
+            <button type="submit"
+                    [disabled]="courseToAdd.chapters.length!=0"
                     (click)="addCourse(courseSummaryLocation,courseToAdd)"
                     class="btn btn-outline-info">Export
             </button>
@@ -99,14 +101,19 @@
             </svg>
           </button>
           <button class="btn btn-outline-danger ml-2 " (click)="deleteItem(item)">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square" fill="currentColor"
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
-                    d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+            </svg>
+          </button>
+          <button type="button" id="btnChapterPageModal" class="btn btn-outline-dark ml-sm-1" data-toggle="modal"
+                  (click)="getChapterPageContent(item)"
+                  data-target="#chapterPageModal" data-whatever="@fat">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-code-slash" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
-                    d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/>
-              <path fill-rule="evenodd"
-                    d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/>
+                    d="M4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0zm-.999-3.124a.5.5 0 0 1 .33.625l-4 13a.5.5 0 0 1-.955-.294l4-13a.5.5 0 0 1 .625-.33z"/>
             </svg>
           </button>
         </td>
@@ -175,7 +182,29 @@
       </div>
       <div class="modal-body">
         <div [innerHTML]="pageHtmlContent"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+
+<!--Modal chapter Page content-->
+<div class="modal fade" id="chapterPageModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel3">Chapter page content : </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div [innerHTML]="chapterPageHtmlContent"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>

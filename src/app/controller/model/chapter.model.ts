@@ -6,4 +6,5 @@ export class Chapter {
   }
 
   public id: number;
+  public chapterHtmlPageContent: string;
 }

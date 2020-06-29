@@ -3,6 +3,7 @@ import {CourseService} from '../../controller/service/course.service';
 import {Course} from '../../controller/model/course.model';
 import Swal from 'sweetalert2';
 import {Chapter} from '../../controller/model/chapter.model';
+import {ChapterService} from '../../controller/service/chapter.service';
 
 
 @Component({
@@ -12,14 +13,13 @@ import {Chapter} from '../../controller/model/chapter.model';
 })
 export class CourseScrapingCreateComponent implements OnInit {
 
-  constructor(private courseService: CourseService) {
+  constructor(private courseService: CourseService, private chapterService: ChapterService) {
   }
 
   ngOnInit(): void {
   }
 
   public courseSummaryLocation: string;
-  public courseHtml;
   public chapter = new Chapter();
 
   get courseToAdd() {
@@ -65,7 +65,7 @@ export class CourseScrapingCreateComponent implements OnInit {
       Swal.fire({
         title: 'Loading chapters',
         html: 'Please wait !<b></b> ',
-        timer: 60000,
+        timer: 10000,
         timerProgressBar: true,
         onBeforeOpen: () => {
           Swal.showLoading();
@@ -98,8 +98,20 @@ export class CourseScrapingCreateComponent implements OnInit {
   }
 
   addCourse(searchLocation: string, courseDto: Course) {
-    this.getCourseByLink(courseDto);
-    setTimeout(() => this.checkIfCourseExist(searchLocation, courseDto), 1000);
+    if (courseDto.courseLink === '' || courseDto.courseLink === undefined) {
+      Swal.fire({
+        text: 'Course URL missing ',
+        icon: 'warning',
+      });
+    } else if (searchLocation === '' || searchLocation === undefined) {
+      Swal.fire({
+        text: 'Search location missing ',
+        icon: 'warning',
+      });
+    } else {
+      this.getCourseByLink(courseDto);
+      setTimeout(() => this.checkIfCourseExist(searchLocation, courseDto), 1000);
+    }
   }
 
   saveCourse() {
@@ -116,16 +128,22 @@ export class CourseScrapingCreateComponent implements OnInit {
 
   getPageContent(courseDto: Course) {
     this.courseService.getPageContent(courseDto);
-    this.courseHtml = new DOMParser().parseFromString(this.courseService.page_content, 'text/html');
-    console.log(this.courseHtml.text);
-
   }
 
   get pageHtmlContent() {
     return this.courseService.page_content;
   }
 
+  getChapterPageContent(chapterDto: Chapter) {
+    this.chapterService.getPageContent(chapterDto);
+  }
+
+  get chapterPageHtmlContent() {
+    return this.chapterService.page_HtmlContent;
+  }
+
   reset() {
+    this.courseService.course_chapters = Array<Chapter>();
     this.courseService.course_create = new Course();
     this.courseSummaryLocation = '';
   }
