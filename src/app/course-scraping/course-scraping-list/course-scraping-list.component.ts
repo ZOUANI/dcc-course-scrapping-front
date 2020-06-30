@@ -21,9 +21,14 @@ export class CourseScrapingListComponent implements OnInit {
   public course = new Course();
   public searchText = '';
 
+
   getCourseChapters(course: Course) {
     this.course = course;
     this.chapters = course.chapters;
+  }
+
+  getCourseForDetail(course: Course) {
+    this.course = course;
   }
 
   get allCourses() {

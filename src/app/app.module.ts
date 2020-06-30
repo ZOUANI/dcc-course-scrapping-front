@@ -8,6 +8,7 @@ import {CourseScrapingListComponent} from './course-scraping/course-scraping-lis
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     FormsModule,
     HttpClientModule,
     Ng2SearchPipeModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
