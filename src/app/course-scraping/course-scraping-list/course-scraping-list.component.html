@@ -138,8 +138,14 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Difficulty</div>
             </div>
-            <input type="text" class="form-control" id="difficulty" name="difficulty"
-                   placeholder="Difficulty..." [(ngModel)]="course.difficulty">
+            <select id="difficulty" class="custom-select" name="difficulty" [(ngModel)]="course.difficulty">
+              <option disabled selected>Courses...</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Elementary">Elementary</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              <option value="Very Advanced">Very Advanced</option>
+            </select>
           </div>
         </div>
         <!-- Difficulty-->
@@ -192,7 +198,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item"
                   *ngFor="let item of courseThemesOfCourse">{{item.theme.wording}}
-                <button class="btn btn-outline-danger ml-2 " (click)="deleteCourseTheme(item.id)">
+                <button class="btn btn-outline-danger ml-2 " (click)="deleteCourseTheme(item.id,course.id)">
                   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
                        xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -208,7 +214,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="edit" class="btn btn-outline-info" (click)="editCourse(course,course.id)">Edit
+        <button type="button" id="edit" class="btn btn-outline-info"
+                (click)="editCourse(course,course.id)">Edit
         </button>
       </div>
     </div>

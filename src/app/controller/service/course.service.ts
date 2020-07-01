@@ -4,6 +4,7 @@ import {Course} from '../model/course.model';
 import Swal from 'sweetalert2';
 import {Chapter} from '../model/chapter.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -107,7 +108,15 @@ export class CourseService {
       if (result.value) {
         this.http.put<Course>(this.courseUrl + '/updateCourse/id/' + id, course).subscribe(
           data => {
+            $('#courseModal').modal('hide');
             console.log(data);
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Course updated ',
+              showConfirmButton: false,
+              timer: 1500
+            });
           }, error1 => {
             console.log(error1);
           }

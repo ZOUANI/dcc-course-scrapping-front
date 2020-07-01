@@ -42,7 +42,7 @@ export class CourseThemeService {
     );
   }
 
-  public deleteCourseTheme(id: number) {
+  public deleteCourseTheme(id: number, idCourse: number) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
@@ -55,6 +55,8 @@ export class CourseThemeService {
       if (result.value) {
         this.http.delete(this.courseThemeUrl + '/id/' + id).subscribe(
           data => {
+            this.getCourseThemesByCourse(idCourse);
+            this.themeService.getThemesToAdd(idCourse);
           }, error1 => {
             console.log(error1);
           }

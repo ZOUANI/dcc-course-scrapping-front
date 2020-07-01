@@ -1,0 +1,18 @@
+<nav>
+  <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-createMetaData-tab" data-toggle="tab" href="#nav-createMetaData"
+       role="tab"
+       aria-controls="nav-createMetaData" aria-selected="true">Create MetaData</a>
+    <a class="nav-item nav-link" id="nav-MetaDatalist-tab" data-toggle="tab" href="#nav-MetaDatalist" role="tab"
+       aria-controls="nav-MetaDatalist" aria-selected="false">All metaData</a>
+  </div>
+</nav>
+<div class="tab-content justify-content-center" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-createMetaData" role="tabpanel"
+       aria-labelledby="nav-createMetaData-tab">
+    <app-course-meta-data-create></app-course-meta-data-create>
+  </div>
+  <div class="tab-pane fade" id="nav-MetaDatalist" role="tabpanel" aria-labelledby="nav-MetaDatalist-tab">
+    <app-course-meta-data-list></app-course-meta-data-list>
+  </div>
+</div>

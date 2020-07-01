@@ -65,8 +65,8 @@ export class CourseScrapingListComponent implements OnInit {
     return this.courseThemeService.courseThemesByCourse;
   }
 
-  deleteCourseTheme(id: number) {
-    return this.courseThemeService.deleteCourseTheme(id);
+  deleteCourseTheme(id: number, idCourse: number) {
+    return this.courseThemeService.deleteCourseTheme(id, idCourse);
   }
 
   deleteCourse(id: number) {
