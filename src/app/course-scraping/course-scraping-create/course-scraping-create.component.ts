@@ -65,7 +65,7 @@ export class CourseScrapingCreateComponent implements OnInit {
       Swal.fire({
         title: 'Loading chapters',
         html: 'Please wait !<b></b> ',
-        timer: 10000,
+        timer: 120000,
         timerProgressBar: true,
         onBeforeOpen: () => {
           Swal.showLoading();

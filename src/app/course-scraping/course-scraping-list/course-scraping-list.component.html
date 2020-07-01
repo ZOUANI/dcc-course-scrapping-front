@@ -49,14 +49,14 @@
       </td>
       <td>
         <button type="button" id="btnCoursePageModal" class="btn btn-outline-dark ml-sm-1" data-toggle="modal"
-                data-target="#coursePageModal" data-whatever="@fat">
+                data-target="#coursePageModal" data-whatever="@fat" (click)="getPageContent(item)">
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-code-slash" fill="currentColor"
                xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
                   d="M4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0zm-.999-3.124a.5.5 0 0 1 .33.625l-4 13a.5.5 0 0 1-.955-.294l4-13a.5.5 0 0 1 .625-.33z"/>
           </svg>
         </button>
-        <button class="btn btn-outline-danger ml-2 ">
+        <button class="btn btn-outline-danger ml-2 " (click)="deleteCourse(item.id)">
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
                xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -109,7 +109,7 @@
 <!--Modal Course detail-->
 <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog modal-lg " role="document">
+  <div class="modal-dialog modal-xl " role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel1">
@@ -126,7 +126,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Description</div>
             </div>
-            <textarea type="text" class="form-control" name="chapterTitle"
+            <textarea type="text" class="form-control" name="chapterDescription"
                       id="description" placeholder="Description..." [(ngModel)]="course.description">
             </textarea>
           </div>
@@ -167,27 +167,49 @@
             </div>
           </div>
         </div>
-
-        <!-- Themes-->
-        <div class="form-group">
-          <label class="sr-only" for="theme">Theme</label>
-          <div class="input-group mb-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Theme</div>
+        <div class="row">
+          <!-- Themes options-->
+          <div class="col">
+            <div class="form-group">
+              <label class="sr-only" for="theme">Themes</label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Themes</div>
+                </div>
+                <select id="theme" class="custom-select" name="theme" [(ngModel)]="theme.id">
+                  <option disabled selected>Themes...</option>
+                  <option *ngFor="let item of themesToAdd"
+                          [value]="item.id">{{item.wording}}</option>
+                </select>
+              </div>
             </div>
-            <select id="theme" class="custom-select" [value]="course.entitled.valueOf()">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+            <button type="button" (click)="postCourseTheme(course.id,theme.id)"
+                    class="btn btn-outline-info">Add theme
+            </button>
+          </div>
+          <div class="col">
+            <h6>Course themes</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"
+                  *ngFor="let item of courseThemesOfCourse">{{item.theme.wording}}
+                <button class="btn btn-outline-danger ml-2 " (click)="deleteCourseTheme(item.id)">
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                       xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                  </svg>
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
+
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="edit" class="btn btn-outline-info">Edit</button>
+        <button type="button" id="edit" class="btn btn-outline-info" (click)="editCourse(course,course.id)">Edit
+        </button>
       </div>
     </div>
   </div>
@@ -206,6 +228,7 @@
         </button>
       </div>
       <div class="modal-body">
+        <div [innerHTML]="pageHtmlContent"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>

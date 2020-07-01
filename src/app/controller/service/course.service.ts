@@ -65,7 +65,6 @@ export class CourseService {
   public getPageContent(courseDto: Course) {
     this.http.post<Course>(this.courseUrl + '/getPageContent', courseDto).subscribe(
       data => {
-        //console.log(data);
         this.page_content = data.htmlPageContent;
       }, error1 => {
         console.log(error1);
@@ -93,5 +92,50 @@ export class CourseService {
         console.log(error1);
       }
     );
+  }
+
+  public editCourse(course: Course, id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#1085ff',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!'
+    }).then((result) => {
+      if (result.value) {
+        this.http.put<Course>(this.courseUrl + '/updateCourse/id/' + id, course).subscribe(
+          data => {
+            console.log(data);
+          }, error1 => {
+            console.log(error1);
+          }
+        );
+      }
+    });
+
+  }
+
+  public deleteCourse(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#07d600',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.http.delete(this.courseUrl + '/deleteCourse/id/' + id).subscribe(
+          data => {
+            this.getAllCourses();
+          }, error1 => {
+            console.log(error1);
+          }
+        );
+      }
+    });
   }
 }
