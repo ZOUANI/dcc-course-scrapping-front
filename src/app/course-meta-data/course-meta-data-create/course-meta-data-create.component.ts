@@ -48,7 +48,7 @@ export class CourseMetaDataCreateComponent implements OnInit {
   addCourseBagOfWords() {
     let myObj = {
       word: this.courseWord,
-      frequency: this.courseFrequency
+      tf: this.courseFrequency
     };
     this.listCourseBagOfWords().push(myObj);
     //console.log(JSON.stringify(this.listCourseBagOfWords()));
@@ -59,7 +59,7 @@ export class CourseMetaDataCreateComponent implements OnInit {
   addChapterBagOfWords() {
     let myObj = {
       word: this.chapterWord,
-      frequency: this.chapterFrequency
+      tf: this.chapterFrequency
     };
     this.listChapterBagOfWords().push(myObj);
     this.chapterWord = '';

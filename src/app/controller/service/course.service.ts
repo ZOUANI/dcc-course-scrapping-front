@@ -108,7 +108,7 @@ export class CourseService {
       if (result.value) {
         this.http.put<Course>(this.courseUrl + '/updateCourse/id/' + id, course).subscribe(
           data => {
-            $('#courseModal').modal('hide');
+            // $('#courseModal').modal('hide');
             console.log(data);
             Swal.fire({
               position: 'top-end',
