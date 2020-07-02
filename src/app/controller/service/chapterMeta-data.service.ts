@@ -13,10 +13,13 @@ export class ChapterMetaDataService {
 
   //================Variables======================
   public chapterMetaData_create = new ChapterMetaData();
+  public listChapterBagOfWords = new Array<any>();
 
 
   public addChapterMetaData() {
     let chapterMetaDataCreateClone = new ChapterMetaData(this.chapterMetaData_create.title, this.chapterMetaData_create.bagOfWords);
     this.courseMetaDataService.courseMetaData_create.chaptersMetaData.push(chapterMetaDataCreateClone);
+    this.chapterMetaData_create = new ChapterMetaData();
+    this.listChapterBagOfWords = new Array<any>();
   }
 }

@@ -1,1 +1,259 @@
-<p>course-meta-data-create works!</p>
+<div class="row">
+  <br>
+  <div class="col-6">
+    <br>
+    <div class="alert alert-success" role="alert">
+      <h4>Course MetaData</h4>
+    </div>
+    <!-- Course title-->
+    <div class="form-group">
+      <label class="sr-only" for="courseMetaDataTitle">Course title</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Course title</div>
+        </div>
+        <input type="text" class="form-control" name="courseMetaDataTitle" [(ngModel)]="courseMetaData.title"
+               id="courseMetaDataTitle" placeholder="Title..."/>
+      </div>
+    </div>
+    <!-- Course description-->
+    <div class="form-group">
+      <label class="sr-only" for="courseMetaDataDescription">Description</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Description</div>
+        </div>
+        <textarea class="form-control" name="courseMetaDataDescription" [(ngModel)]="courseMetaData.description"
+                  id="courseMetaDataDescription" placeholder="Description..."></textarea>
+      </div>
+    </div>
+
+    <!--Course Bags of words-->
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Bag of words</span>
+      </div>
+      <input type="text" class="form-control" id="wordOfBagOfWords"
+             name="wordOfBagOfWords" placeholder="Word..." [(ngModel)]="courseWord">
+      <div class="input-group-append">
+        <span class="input-group-text">Word</span>
+      </div>
+      <input type="text" class="form-control" id="frequency"
+             name="frequency" placeholder="0.0" [(ngModel)]="courseFrequency">
+      <div class="input-group-append">
+        <span class="input-group-text">Frequency</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button *ngIf="!inUpdateMode" class="btn btn-outline-success btn-lg btn-block" (click)="addCourseBagOfWords()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor"
+               xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+          </svg>
+          Add word
+        </button>
+        <button *ngIf="inUpdateMode" class="btn btn-outline-info btn-lg btn-block" (click)="updateCourseBagOfWord()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+               xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+          Update word
+        </button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col" style="width: 35%">Word</th>
+          <th scope="col" style="width: 35%">Frequency</th>
+          <th scope="col" style="width: 30%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of listCourseBagOfWords()">
+          <td>{{item.word}}</td>
+          <td>{{item.frequency}}</td>
+          <td>
+            <button class="btn btn-outline-info ml-2" (click)="getCourseBagToUpdate(item)">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+            </button>
+            <button class="btn btn-outline-danger ml-2 " (click)="removeCourseBagOfWord(item)">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <br>
+    <div class="alert alert-secondary" role="alert">
+      <h4>Chapter MetaData</h4>
+    </div>
+    <!-- Course title-->
+    <div class="form-group">
+      <label class="sr-only" for="chapterMetaDataTitle">Chapter title</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Chapter title</div>
+        </div>
+        <input type="text" class="form-control" name="chapterMetaDataTitle" [(ngModel)]="chapterMetaData.title"
+               id="chapterMetaDataTitle" placeholder="Title..."/>
+      </div>
+    </div>
+
+
+    <!--Course Bags of words-->
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Bag of words</span>
+      </div>
+      <input type="text" class="form-control" id="wordChapter"
+             name="wordChapter" placeholder="Word..." [(ngModel)]="chapterWord">
+      <div class="input-group-append">
+        <span class="input-group-text">Word</span>
+      </div>
+      <input type="text" class="form-control" id="frequencyChapter"
+             name="frequencyChapter" placeholder="0.0" [(ngModel)]="chapterFrequency">
+      <div class="input-group-append">
+        <span class="input-group-text">Frequency</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button *ngIf="!inUpdateMode2" class="btn btn-outline-success btn-lg btn-block"
+                (click)="addChapterBagOfWords()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor"
+               xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+          </svg>
+          Add word
+        </button>
+        <button *ngIf="inUpdateMode2" class="btn btn-outline-info" (click)="updateChapterBagOfWord()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+               xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+          Update word
+        </button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col" style="width: 35%">Word</th>
+          <th scope="col" style="width: 35%">Frequency</th>
+          <th scope="col" style="width: 30%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of listChapterBagOfWords()">
+          <td>{{item.word}}</td>
+          <td>{{item.frequency}}</td>
+          <td>
+            <button class="btn btn-outline-info ml-2" (click)="getChapterBagToUpdate(item)">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+            </button>
+            <button class="btn btn-outline-danger ml-2 " (click)="removeChapterBagOfWord(item)">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-outline-secondary btn-lg btn-block" (click)="addChapterToList()">
+      <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor"
+           xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+        <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+      </svg>
+      Add Chapter MetaData
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <br>
+    <div class="alert alert-primary" role="alert">
+      <h4>Chapters</h4>
+    </div>
+    <div class="row">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col" style="width: 25%">#</th>
+          <th scope="col" style="width: 25%">Chapter title</th>
+          <th scope="col" style="width: 25%">Bag Of Words</th>
+          <th scope="col" style="width: 25%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of courseMetaData.chaptersMetaData">
+          <td>Chapter {{courseMetaData.chaptersMetaData.indexOf(item) + 1}}</td>
+          <td>{{item.title}}</td>
+          <td>{{item.bagOfWords}}</td>
+          <td>
+            <button class="btn btn-outline-danger ml-2 " (click)="removeChapterFromList(item)">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+<button class="btn btn-outline-primary btn-lg btn-block" (click)="saveCourseMetaDataWithChaptersMetaData()">
+  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor"
+       xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd"
+          d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+    <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+  </svg>
+  Add Course MetaData
+</button>

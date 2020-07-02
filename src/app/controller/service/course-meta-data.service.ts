@@ -16,8 +16,11 @@ export class CourseMetaDataService {
 
   //================Variables======================
   public courseMetaData_create = new CourseMetaData();
+  public courseBagOfWords: string;
+  public listCourseBagOfWords = new Array<any>();
 
   public saveCourseMetaData() {
+    this.courseMetaData_create.bagOfWords = JSON.stringify(this.listCourseBagOfWords);
     this.http.post<CourseMetaData>(this.courseMetaDataUrl + '/', this.courseMetaData_create).subscribe(
       data => {
         console.log(data);
@@ -37,16 +40,11 @@ export class CourseMetaDataService {
           title: 'Saved successfully'
         });
         this.courseMetaData_create = new CourseMetaData();
+        this.listCourseBagOfWords = new Array<any>();
       }, error1 => {
         console.log(error1);
       }
     );
   }
 
-  public addCourseMetaData() {
-    let courseMetaDataCreateClone = new CourseMetaData(this.courseMetaData_create.title,
-      this.courseMetaData_create.description,
-      this.courseMetaData_create.bagOfWords);
-
-  }
 }
