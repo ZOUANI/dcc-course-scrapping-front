@@ -70,7 +70,7 @@ export class CourseMetaDataCreateComponent implements OnInit {
     this.courseMetaDataBagWord = item;
     this.inUpdateMode = true;
     this.courseWord = item.word;
-    this.courseFrequency = item.frequency;
+    this.courseFrequency = item.tf;
   }
 
   updateCourseBagOfWord() {
@@ -87,7 +87,7 @@ export class CourseMetaDataCreateComponent implements OnInit {
     this.chapterMetaDataBagWord = item;
     this.inUpdateMode2 = true;
     this.chapterWord = item.word;
-    this.chapterFrequency = item.frequency;
+    this.chapterFrequency = item.tf;
   }
 
   updateChapterBagOfWord() {
