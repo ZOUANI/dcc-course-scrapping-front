@@ -18,6 +18,7 @@ export class CourseMetaDataService {
   public courseMetaData_create = new CourseMetaData();
   public courseBagOfWords: string;
   public listCourseBagOfWords = new Array<any>();
+  public allCoursesMetaData = Array<CourseMetaData>();
 
   public saveCourseMetaData() {
     this.courseMetaData_create.bagOfWords = JSON.stringify(this.listCourseBagOfWords);
@@ -45,6 +46,71 @@ export class CourseMetaDataService {
         console.log(error1);
       }
     );
+  }
+
+  public getAllCoursesMetaData() {
+    this.http.get<Array<CourseMetaData>>(this.courseMetaDataUrl + '/').subscribe(
+      data => {
+        console.log(data);
+        this.allCoursesMetaData = data;
+      }, error1 => {
+        console.log(error1);
+      }
+    );
+  }
+
+  public editCourseMetaData(courseMetaData: CourseMetaData, id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#1085ff',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update it!'
+    }).then((result) => {
+      if (result.value) {
+        this.http.put<CourseMetaData>(this.courseMetaDataUrl + '/id/' + id, courseMetaData).subscribe(
+          data => {
+            // $('#courseModal').modal('hide');
+            this.getAllCoursesMetaData();
+            console.log(data);
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Course updated ',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }, error1 => {
+            console.log(error1);
+          }
+        );
+      }
+    });
+  }
+
+
+  public deleteCourseMetaData(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#07d600',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.http.delete(this.courseMetaDataUrl + '/id/' + id).subscribe(
+          data => {
+            this.getAllCoursesMetaData();
+          }, error1 => {
+            console.log(error1);
+          }
+        );
+      }
+    });
   }
 
 }

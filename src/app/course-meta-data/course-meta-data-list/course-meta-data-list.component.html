@@ -1,0 +1,313 @@
+<br>
+<div class="container">
+  <div class="row">
+    <input class="form-control" type="text" placeholder="Search by criteria ..." [(ngModel)]="searchTextMetaData"
+           autocomplete="off">
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <table class="table table-hover table-responsive-xl justify-content-center">
+      <thead>
+      <tr>
+        <th scope="col" style="width: 20%">#</th>
+        <th scope="col" style="width: 20%">Course title</th>
+        <th scope="col" style="width: 20%">Chapters</th>
+        <th scope="col" style="width: 20%">Course detail</th>
+        <th scope="col" style="width: 20%">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of allMetaDataCourses | filter:searchTextMetaData">
+        <th scope="row">Course {{allMetaDataCourses.indexOf(item) + 1}}</th>
+        <td>{{item.title}}</td>
+        <td>
+          <button type="button" id="btnChaptersMetaDataModal" class="btn btn-outline-warning ml-sm-1"
+                  data-toggle="modal"
+                  data-target="#chaptersMetaDataModal" data-whatever="@fat" (click)="getMetaDataCourseChapters(item)">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-nested" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+          </button>
+        </td>
+        <td>
+          <button type="button" id="btnCourseMetaDataModal" class="btn btn-outline-info ml-sm-1" data-toggle="modal"
+                  (click)="getCourseMetaDataForDetail(item)"
+                  data-target="#courseMetaDataModal" data-whatever="@fat">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+              <path fill-rule="evenodd"
+                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+            </svg>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-danger ml-2 " (click)="deleteCourseMetaData(item.id)">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+            </svg>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!--Modal Chapters-->
+<div class="modal fade" id="chaptersMetaDataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chapters of : {{courseMetaData.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Course title-->
+        <div class="form-group">
+          <label class="sr-only" for="chapterMetaDataTitleEdit">Chapter title</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Chapter title</div>
+            </div>
+            <input type="text" class="form-control" name="chapterMetaDataTitleEdit" [(ngModel)]="chapterToEdit.title"
+                   id="chapterMetaDataTitleEdit" placeholder="Title..."/>
+          </div>
+        </div>
+
+
+        <!--Course Bags of words-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Bag of words</span>
+          </div>
+          <input type="text" class="form-control" id="wordChapterMetaData"
+                 name="wordChapterMetaData" placeholder="Word..." [(ngModel)]="chapterWord">
+          <div class="input-group-append">
+            <span class="input-group-text">Word</span>
+          </div>
+          <input type="text" class="form-control" id="frequencyChapterMetaData"
+                 name="frequencyChapterMetaData" placeholder="0.0" [(ngModel)]="chapterFrequency">
+          <div class="input-group-append">
+            <span class="input-group-text">Frequency</span>
+          </div>
+        </div>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col" style="width: 35%">Word</th>
+            <th scope="col" style="width: 35%">Frequency</th>
+            <th scope="col" style="width: 30%"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of listChapterBagOfWords">
+            <td>{{item.word}}</td>
+            <td>{{item.tf}}</td>
+            <td>
+              <button class="btn btn-outline-info ml-2" (click)="getChapterToUpdate(item)">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+              </button>
+              <button class="btn btn-outline-danger ml-2" (click)="removeChapterBagOfWord(item)">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                </svg>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <button *ngIf="listChapterBagOfWords.length!=0" class="btn btn-outline-info btn-lg btn-block"
+                (click)="updateChapterBagOfWord()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+               xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+          Update word
+        </button>
+        <button
+          *ngIf="listChapterBagOfWords.length!=0"
+          class="btn btn-outline-success btn-lg btn-block"
+          (click)="editChapterMetaData(chapterToEdit,chapterToEdit.id)">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+               xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+          Update chapter MetaData
+        </button>
+        <hr>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col" style="width: 20%">Chapter</th>
+            <th scope="col" style="width: 20%">Chapter title</th>
+            <th scope="col" style="width: 40%">Chapter bag of words</th>
+            <th scope="col" style="width: 20%">Actions</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let chapter of chaptersMetaData">
+            <th scope="row">Chapter {{chaptersMetaData.indexOf(chapter) + 1}}</th>
+            <td>{{chapter.title}}</td>
+            <td>{{chapter.bagOfWords}}</td>
+            <td>
+              <button class="btn btn-outline-info ml-2" (click)="selectToEditAChapterMetaData(chapter)">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+              </button>
+              <button class="btn btn-outline-danger ml-2 " (click)="deleteChapterMetaData(chapter.id)">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                </svg>
+              </button>
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal Course detail-->
+<div class="modal fade" id="courseMetaDataModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-xl " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">
+          Detail course MetaData : {{courseMetaData.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Course description-->
+        <div class="form-group">
+          <label class="sr-only" for="titleMetaData">Title course</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Title course</div>
+            </div>
+            <input type="text" class="form-control" name="titleMetaData"
+                   id="titleMetaData" placeholder="Description..." [(ngModel)]="courseMetaData.title"/>
+
+          </div>
+        </div>
+        <!-- Course description-->
+        <div class="form-group">
+          <label class="sr-only" for="descriptionMetaData">Description</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Description</div>
+            </div>
+            <textarea type="text" class="form-control" name="chapterDescriptionMetaData"
+                      id="descriptionMetaData" placeholder="Description..." [(ngModel)]="courseMetaData.description">
+            </textarea>
+          </div>
+        </div>
+        <!--Course Bags of words-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Bag of words</span>
+          </div>
+          <input type="text" class="form-control" id="wordOfMetaBagOfWords"
+                 name="wordOfMetaBagOfWords" placeholder="Word..." [(ngModel)]="courseWord">
+          <div class="input-group-append">
+            <span class="input-group-text">Word</span>
+          </div>
+          <input type="text" class="form-control" id="frequencyMeta"
+                 name="frequencyMeta" placeholder="0.0" [(ngModel)]="courseFrequency">
+          <div class="input-group-append">
+            <span class="input-group-text">Frequency</span>
+          </div>
+        </div>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col" style="width: 35%">Word</th>
+            <th scope="col" style="width: 35%">Frequency</th>
+            <th scope="col" style="width: 30%"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of listCourseBagOfWords">
+            <td>{{item.word}}</td>
+            <td>{{item.tf}}</td>
+            <td>
+              <button class="btn btn-outline-info ml-2" (click)="getCourseBagToUpdate(item)">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+              </button>
+              <button class="btn btn-outline-danger ml-2 " (click)="removeCourseBagOfWord(item)">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                </svg>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <button *ngIf="listCourseBagOfWords.length!=0" class="btn btn-outline-info btn-lg btn-block"
+                (click)="updateCourseBagOfWord()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+               xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+          Update word
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="edit" class="btn btn-outline-info"
+                (click)="editCourseMetaData(courseMetaData,courseMetaData.id)">Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,4 +4,6 @@ export class ChapterMetaData {
     public bagOfWords?: string,
   ) {
   }
+
+  public id: number;
 }
