@@ -119,6 +119,7 @@ export class CourseMetaDataListComponent implements OnInit {
     chapterMetaData.bagOfWords = JSON.stringify(this.listChapterBagOfWords);
     this.chapterMetaDataService.editChapterMetaData(chapterMetaData, id);
     this.listChapterBagOfWords = new Array<any>();
+    this.chapterToEdit = new ChapterMetaData();
   }
 
 }

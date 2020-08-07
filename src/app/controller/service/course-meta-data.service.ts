@@ -42,6 +42,7 @@ export class CourseMetaDataService {
         });
         this.courseMetaData_create = new CourseMetaData();
         this.listCourseBagOfWords = new Array<any>();
+        this.getAllCoursesMetaData();
       }, error1 => {
         console.log(error1);
       }
